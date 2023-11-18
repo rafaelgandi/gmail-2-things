@@ -1,0 +1,90 @@
+body {
+    --app-spacing: 16px;
+}
+
+.__g2t__overlay {
+
+    display: none;
+
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif !important; */
+    font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,Roboto,sans-serif !important;
+    position: fixed;
+    top: 0;
+    left:0;
+    right: 0;
+    bottom:0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.1);
+    z-index: 9999;
+
+    /* display: grid; */
+    align-items: center;
+    justify-content: center;
+
+    &.__g2t__show {
+        display: grid !important;
+    }
+    
+    .__g2t__dialog {
+        background-color: #fff;
+        border: 1px solid #c1c3c6;
+        box-shadow: 1px 3px 19px 0px rgba(0,0,0,0.44);
+        border-radius: 10px;
+        padding: calc(var(--app-spacing) * 1.5);
+        width: 50vw;
+        min-height: 200px;
+        position: relative;
+        overflow: hidden;
+        .__g2t__main-input-con {
+            padding-bottom: var(--app-spacing);
+            & input {
+                border: 0;
+                display: block;
+                width: 100%;
+                outline: none;
+            }
+        }
+        .__g2t__notes {
+            display: block;
+            width: 100%;
+            min-height: 170px;
+            border: 0;
+            resize: none;
+            outline: none;
+        }
+        .__g2t__bottom-button-con {
+            background-color: #f2f3f5;
+            border-top: 1px solid #c1c3c6;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--app-spacing);
+            padding: calc(var(--app-spacing) / 2);
+            .__g2t__bottom-button-con--child {
+                position: relative;
+                & button {
+                    width: 100px;
+                    margin-right: 5px;
+                    display: inline-block;
+                    border: 0;
+                    border-radius: 5px;
+                    font-weight: 700;
+                    color: #fff;
+                    padding: calc(var(--app-spacing) / 2.5);
+                    &.__g2t__cancel-button {
+                        background-color: #babec4;
+                    }
+                    &.__g2t__send-button {
+                        background-color: #1fa7ef;
+                    }
+                }
+            }
+        }
+    }
+}
+
+

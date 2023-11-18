@@ -1,0 +1,65 @@
+{
+    "name": "Gmail 2 Things",
+    "description": "A quick shortcut to add todos to Things app from gmail.",
+    "version": "0.0.0.1",
+    "manifest_version": 3,
+    "minimum_chrome_version": "92",
+    "icons": {
+       
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://mail.google.com/*"
+            ],
+            "css": [
+                "styles.css"
+            ],
+            "js": [
+                "lib/zepto.min.js",
+                "content.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "lib/helpers.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "tabs",
+        "scripting",
+        "activeTab"
+    ],
+    "host_permissions": ["https://mail.google.com/*"],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "commands": {      
+        "open-g2t-dialog": {
+            "suggested_key": {
+                "default": "Alt+Shift+T",
+                "mac": "Alt+Shift+T"
+            },
+            "description": "Open Gmail 2 Things dialog."
+        },
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Alt+Shift+O",
+                "mac": "Alt+Shift+O"
+            },
+            "description": "Open stash window."
+        }
+    }
+}
