@@ -1,21 +1,14 @@
+import {
+    sendMessageToActiveTab,
+    storageSet,
+    storageGet,
+    openInNewTab
+} from './lib/helpers.js';
+
+
 
 (async () => {
-    async function getCurrentTabData() {
-        // See: https://stackoverflow.com/a/17826527
-        const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-        return tabs?.[0] ?? undefined;
-    }
-    
-    async function sendMessageToActiveTab(data) {
-        const tab = await getCurrentTabData();
-        if (!tab) { return; }
-        return new Promise((resolve) => {
-            chrome.tabs.sendMessage(tab.id, data, (response) => {
-                resolve(response ?? undefined);
-                return false;
-            });
-        });
-    }
+
     // See: https://dev.to/paulasantamaria/adding-shortcuts-to-your-chrome-extension-2i20
     chrome.commands.onCommand.addListener(function setKeyboardShortcut(command) {
         switch (command) {
@@ -27,6 +20,24 @@
             default:
                 console.log(`Command ${command} not found`);
         }
+    });
+
+    chrome.runtime.onInstalled.addListener(function onStashExtensionInstall(details) {
+        // console.log(details);
+        console.log('Running on install listeners');
+        // LM: 2023-11-02 16:01:23 [If user has updated the extension.]
+        // See: https://stackoverflow.com/questions/2399389/detect-chrome-extension-first-run-update
+        if (details?.reason === 'update') {
+            if (details?.previousVersion !== chrome.runtime.getManifest().version) {
+                // openInNewTab(onStashUpdateNotionPage); // Open review campaign notion page.
+            }
+        }
+        (async () => {
+            const g2tThingsEmail = await storageGet('g2tThingsEmail');
+            if (!g2tThingsEmail) {
+                storageSet('g2tThingsEmail', '');
+            }
+        })();
     });
 
 })()
