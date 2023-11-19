@@ -41,6 +41,13 @@
         return true;
     }
 
+    function handleLayoutChangeError() {
+        Zepto(document.body)?.removeClass('g2t-sending');
+        Zepto('div.no')?.css({opacity: 1, position: 'static'});
+        alert(`Sorry, looks like Gmail has updated its internal mechanism. We are currently looking into this.`);
+        return false;
+    }
+
     /** 
      * @param {string} todo
      * @param {null | string} [note=null]  
@@ -51,19 +58,36 @@
         return new Promise((resolve) => {
             setTimeout(() => {
                 const $composeButton = Zepto('.T-I.T-I-KE.L3[role="button"]');
+                if (!$composeButton.length) { 
+                    return handleLayoutChangeError();
+                }
                 // Opening compose box
                 $composeButton.trigger('click');
                 Zepto('div.no')?.css({opacity: 0, position: 'absolute', right: '-99999999px'});
                 setTimeout(() => {
                     $composeButton.css({pointerEvents: 'none'}); // Disable compose button while sending
-                    Zepto('div.no:has(div[name="to"])')?.css({opacity: 0});
-                    Zepto('div[name="to"].anm input').val(thingsEmail);                  
-                    Zepto('input[name="subjectbox"][aria-label="Subject"]').val(todo);
+                    const $composeEmailBottomPopup = Zepto('div.no:has(div[name="to"])');
+                    const $toField = Zepto('div[name="to"].anm input');
+                    const $subjectField = Zepto('input[name="subjectbox"][aria-label="Subject"]');
+                    const $textboxField = Zepto('.AD [role="textbox"][aria-multiline="true"]');
+                    if (!$composeEmailBottomPopup.length || !$toField.length || !$subjectField.length) {
+                        return handleLayoutChangeError();
+                    }
+                    $composeEmailBottomPopup?.css({opacity: 0});
+                    $toField.val(thingsEmail);                  
+                    $subjectField.val(todo);
                     if (!!note) {
-                        Zepto('.AD [role="textbox"][aria-multiline="true"]')?.text(note);
+                        if (!$textboxField.length) {
+                            return handleLayoutChangeError();
+                        }
+                        $textboxField?.text(note);
+                    }
+                    const $sendButton = Zepto('.AD [role="button"][aria-label^="Send"]');
+                    if (!$sendButton.length) {
+                        return handleLayoutChangeError();
                     }
                     // Send Button
-                    Zepto('.AD [role="button"][aria-label^="Send"]').trigger('click');
+                    $sendButton?.trigger('click');
                     Zepto(document.body).addClass('g2t-sending');
                     // Zepto('.vh').hide();
                     setTimeout(() => {                
