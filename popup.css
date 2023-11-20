@@ -31,6 +31,22 @@ main {
     background-color: #ffc3d1 !important;
 }
 
+.hide {
+    display: none !important;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+p {
+    font-size: .8rem;
+    line-height: 20px;
+    text-align: center;
+    color: #959ca4;
+}
+
 #g2t__email-input-section {
     .g2t__email-label {
         padding: calc(var(--app-spacing) / 3);
@@ -48,10 +64,6 @@ main {
             width: var(--size);
             
         }
-        & label {
-            font-size: 1rem;
-            font-weight: 600;
-        }
     }
     & #g2t__things-email-input {
         padding: calc(var(--app-spacing) / 2);
@@ -67,13 +79,6 @@ main {
             font-style: italic;
             color: #e7e8e9
         }
-    }
-
-    & p {
-        font-size: .8rem;
-        line-height: 20px;
-        text-align: center;
-        color: #959ca4;
     }
 
     & #g2t__things-email-submit-button {
@@ -95,5 +100,20 @@ main {
         width: 100px;
         text-align: center;
         color: #b4b4b4;
+    }
+}
+
+#g2t__about-section {
+    text-align: center;
+    /* padding-top: var(--app-spacing); */
+    & img {
+        width: 80px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    & label {
+        padding-top: calc(var(--app-spacing));
+        display: block;
     }
 }

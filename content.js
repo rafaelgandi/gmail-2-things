@@ -10,7 +10,7 @@
 
     let $g2tCon = null;
     const buttonIconBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAjJJREFUWEftl01LG1EUht/5TEIodFNEqKDkA7MolG4EF4JLrUppF4X+g/6CLloRKe5d9D9oF3GhRnfZu3WhoVYDohTaTWlLwtz5kjNxJvNxkyaTCbHFgUAYZu773HPOPecdwbbtMkZ4CbZt2yPUxz0ANwL+rAyaIUEQvAz7/7s3IwAkSL+nhzp+smSqIy0BtSUFBBCGiABYloXL3wbmqsnW5ruSgLdFGaIoBnYVATAMA/l9E1ay+o7oxbIESZICUQgAUOh1XUe+0lZ/P/kLy2O6swAvh7wkuXWz913FRv2B98jX5wIUpZUKbg3wANYKDbx6LDjk/VymaaJ8BayfZbzXzhYBVVW7AzDGUDhoS32cZng9pUCW5X70QQDbFwyrNXVAgBLDm1zaAeg1BaRIqdw61/DhVLkH+Mcj8HLcwMwjGSlZwosJkdvN3C26XbRybeEPM3H0w8DOt3bxxjoF4dKvr7S6WbggSZy66NSu0fG0JAJAq/MgSLy4p4NZnU9rYgDnS2LgWNLuqYXn9ruoA0gMILwQr4Py4jBUgHAH/b8BvizYgaHipsA/Q4Yagb6mku/hnmqAhsjmiYZP9fYUiyvof+/ZQwufZ8W/j2M6To1GA0+q6SR0vTWO55vIZrORqRqxZDTHNU1Ds9kEVTY1mEEu6ppkQjKZDFKpVMTYcF0xQVAkKB1uf48D4bpg8hJkxcJ+0LF5vE8zV3QQcc/z3VpxniXvCBBnt3HfuRPfhiP9PL8BfCv0DK0U/aoAAAAASUVORK5CYII=';
-
+    const isOnMac = (navigator.userAgent.toLowerCase().includes("macintosh") || navigator.userAgent.toLowerCase().includes("mac os x"));
 
     async function storageGet(key) {
         const val = await chrome.storage.local.get([key]);
@@ -31,6 +31,8 @@
             [key]: JSON.stringify(value)
         });
     }
+
+    const userThingsEmail = await storageGet('g2tThingsEmail');
 
     function messageHandler(data, sender, sendResponse) {
         if (data.message === 'open-g2t-dialog') {
@@ -62,7 +64,9 @@
      * 
     */
     function sendTodo(todo, note = null) {
-        const thingsEmail = 'add-to-things-eg6kmwd5ixlnqg5qnk6@things.email';
+        if (!userThingsEmail) {
+            return;
+        }
         return new Promise((resolve) => {
             setTimeout(() => {
                 const $composeButton = zeptoQueryThirdPartyDOM('.T-I.T-I-KE.L3[role="button"]');
@@ -82,7 +86,7 @@
                         return handleLayoutChangeError();
                     }
                     $composeEmailBottomPopup?.css({ opacity: 0 });
-                    $toField.val(thingsEmail);
+                    $toField.val(userThingsEmail);
                     $subjectField.val(todo);
                     if (!!note) {
                         if (!$textboxField.length) {
@@ -150,7 +154,7 @@
                 <img src="${buttonIconBase64}" />
             `);
             $div.addClass('__g2t__open-button');
-            $div.attr('title', 'Shift + Alt + T');
+            $div.attr('title', (isOnMac) ? 'Shift + Option + T' : 'Shift + Alt + T');
             const $gmailLeftNavBar = zeptoQueryThirdPartyDOM('.aeN.WR.a6o.anZ.baA.nH.oy8Mbf[role="navigation"]');
             if ($gmailLeftNavBar.length) { // If left sidbar exists then give the button a high zindex.
                 $div.css({ zIndex: 100 });
@@ -165,6 +169,10 @@
 
 
     function openDialog() {
+        if (!userThingsEmail) {
+            alert(`Please make sure to set your Mail to Things email first. You can do so by clicking the Gmail to Things icon.`);
+            return;
+        }
         $g2tCon = createDialog();
         $g2tCon.addClass('__g2t__show');
         const $todoInput = Zepto('#_g2t__todo-input');
