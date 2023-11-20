@@ -12,7 +12,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://mail.google.com/*"
+                "*://mail.google.com/*"
             ],
             "css": [
                 "styles.css"
