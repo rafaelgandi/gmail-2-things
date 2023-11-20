@@ -1,0 +1,99 @@
+
+:root {
+    font-size: 16px;
+    --app-spacing: 1rem;
+}
+
+body {
+    font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,Roboto,sans-serif !important; 
+    background-color: #fff;
+    & * {
+        box-sizing: border-box;
+    }
+
+}
+
+a,
+a:active,
+a:visited,
+a:hover {
+    color: #1fa7ef;
+    text-decoration: none;
+}
+
+main {
+    width: 300px;
+    min-height: 260px;
+    padding: var(--app-spacing);
+}
+
+.error {
+    background-color: #ffc3d1 !important;
+}
+
+#g2t__email-input-section {
+    .g2t__email-label {
+        padding: calc(var(--app-spacing) / 3);
+        display: grid;
+        grid-template-columns: 13% 1fr;
+        align-items: center;
+        justify-content: center;
+        /* & * {
+            outline: 1px solid red;
+        } */
+        & img {
+            position: relative;
+            left: -10px;
+            --size: 40px;
+            width: var(--size);
+            
+        }
+        & label {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+    }
+    & #g2t__things-email-input {
+        padding: calc(var(--app-spacing) / 2);
+        display: block;
+        width: 100%;
+        border: 1px solid #e7e8e9;
+        border-radius: 5px;
+        font-size: .9rem;
+        &:focus {
+            outline: none;
+        }
+        &::placeholder {
+            font-style: italic;
+            color: #e7e8e9
+        }
+    }
+
+    & p {
+        font-size: .8rem;
+        line-height: 20px;
+        text-align: center;
+        color: #959ca4;
+    }
+
+    & #g2t__things-email-submit-button {
+        border: 0;
+        width: 100px;
+        display: block;
+        margin: 0 auto;
+        border-radius: 5px;
+        font-weight: 700;
+        color: #fff;
+        padding: calc(var(--app-spacing) / 2.5);
+        background-color: #3c84f3;
+    }
+
+    & #g2t__about-link {
+        display: block;
+        padding-top: var(--app-spacing);
+        margin: 0 auto;
+        width: 100px;
+        text-align: center;
+        color: #b4b4b4;
+    }
+}

@@ -5,10 +5,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="initial-scale=1.0" />
     <title>Gmail 2 Things</title>
+    <link rel="stylesheet" href="./popup.css">
 </head>
 
 <body>
-    <main></main>
+    <main>
+        <section id="g2t__email-input-section">
+            <form action="">
+                <div class="g2t__email-label">
+                    <img src="./assets/things-mail.png" />
+                    <label>Your Mail to Things Email</label>
+                </div>
+                <input type="email" required placeholder="add-to-things-abcde@things.email" id="g2t__things-email-input" />
+                <p>
+                    Place your  Mail to Things email here. To enable this feature on your 
+                    Things account, you can follow the <a target="_blank" href="https://culturedcode.com/things/support/articles/2908262/">instructions here.</a> 
+                </p>
+                <button type="submit" id="g2t__things-email-submit-button">Save</button>
+                <a href="" id="g2t__about-link">About</a>
+            </form>           
+        </section>
+    </main>
+    <script src="./lib/zepto.min.js"></script>
     <script src="./popup.js" type="module"></script>
 </body>
 
