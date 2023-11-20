@@ -2,7 +2,8 @@ import {
     sendMessageToActiveTab,
     storageSet,
     storageGet,
-    openInNewTab
+    openInNewTab,
+    landingPageUrl
 } from './lib/helpers.js';
 
 
