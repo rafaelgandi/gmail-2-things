@@ -29,13 +29,14 @@ import {
         // See: https://stackoverflow.com/questions/2399389/detect-chrome-extension-first-run-update
         if (details?.reason === 'update') {
             if (details?.previousVersion !== chrome.runtime.getManifest().version) {
-                // openInNewTab(onStashUpdateNotionPage); // Open review campaign notion page.
+                // openInNewTab(landingPageUrl); // Open notion landing page.
             }
         }
         (async () => {
             const g2tThingsEmail = await storageGet('g2tThingsEmail');
             if (!g2tThingsEmail) {
                 storageSet('g2tThingsEmail', '');
+                openInNewTab(landingPageUrl); // Open notion landing page on first install.
             }
         })();
     });

@@ -153,11 +153,13 @@
             `);
             $div.addClass('__g2t__open-button');
             $div.attr('title', (isOnMac) ? 'Shift + Option + T' : 'Shift + Alt + T');
-            const $gmailLeftNavBar = zeptoQueryThirdPartyDOM('.aeN.WR.a6o.anZ.baA.nH.oy8Mbf[role="navigation"]');
-            if ($gmailLeftNavBar.length) { // If left sidbar exists then give the button a high zindex.
-                $div.css({ zIndex: 100 });
-            }
             $div.appendTo('body');
+            setTimeout(() => { // Add delay because the side bar is not added right away.
+                const $gmailLeftNavBar = zeptoQueryThirdPartyDOM('.aeN.WR.a6o.anZ.baA.nH.oy8Mbf[role="navigation"]');
+                if ($gmailLeftNavBar.length) { // If left sidbar exists then give the button a higher zindex.
+                    $div.css({ zIndex: 100 });
+                }
+            }, 2000);
         }
         else {
             return $button;
@@ -239,9 +241,3 @@
     }
 
 })();
-
-
-
-document.body.__g2tGmailLayoutTest = function() {
-    console.log('helllooooo');
-};
