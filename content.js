@@ -1,8 +1,6 @@
 /*
     Gmail 2 Things
     www.rafaelgandi.com
-
-    add-to-things-eg6kmwd5ixlnqg5qnk6@things.email
 */
 (async () => {
     /* Zepto v1.2.0 - zepto event ajax form ie - zeptojs.com/license */
