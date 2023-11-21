@@ -1,6 +1,6 @@
 {
-    "name": "Gmail 2 Things",
-    "description": "A quick shortcut to add todos to Things app from gmail.",
+    "name": "Gmail To Things",
+    "description": "A quick shortcut to add todos to Things app from Gmail.",
     "version": "0.0.0.1",
     "manifest_version": 3,
     "minimum_chrome_version": "92",
