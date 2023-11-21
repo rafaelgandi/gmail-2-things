@@ -3,7 +3,8 @@ import {
     storageGet,
     reloadTabWithUrl,
     openInNewTab,
-    landingPageUrl
+    landingPageUrl,
+    feedbackUrl
 } from './lib/helpers.js';
 
 
@@ -42,7 +43,7 @@ Zepto(() => {
     Zepto(document)
     .on('click', '#g2t__feedback-link', (e) => {
         e.preventDefault();
-        openInNewTab(landingPageUrl);
+        openInNewTab(feedbackUrl);
         return false;
     })
     .on('click', '#g2t__about-link', (e) => {
