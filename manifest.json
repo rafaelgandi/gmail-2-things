@@ -1,7 +1,7 @@
 {
     "name": "Gmail To Things",
-    "description": "A quick shortcut to add todos to Things app from Gmail.",
-    "version": "0.0.0.1",
+    "description": "A quick shortcut to add tasks to Things in Gmail.",
+    "version": "0.0.0.2",
     "manifest_version": 3,
     "minimum_chrome_version": "92",
     "icons": {

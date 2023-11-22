@@ -67,6 +67,11 @@
         }
         return new Promise((resolve) => {
             setTimeout(() => {
+                // LM: 2023-11-22 13:47:04 [If there is any draft the currently is open, discard it.]
+                const $deleteDraftButton = Zepto('.oh.J-Z-I[role="button"][aria-label*="Discard draft"][data-tooltip]');
+                if ($deleteDraftButton.length) {
+                    $deleteDraftButton.trigger('click');
+                }
                 const $composeButton = zeptoQueryThirdPartyDOM('.T-I.T-I-KE.L3[role="button"]');
                 if (!$composeButton.length) {
                     return handleLayoutChangeError();
