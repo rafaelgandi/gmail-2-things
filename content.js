@@ -70,7 +70,7 @@
                 // LM: 2023-11-22 13:47:04 [If there is any draft the currently is open, discard it.]
                 const $deleteDraftButton = Zepto('.oh.J-Z-I[role="button"][aria-label*="Discard draft"][data-tooltip]');
                 if ($deleteDraftButton.length) {
-                    $deleteDraftButton.trigger('click');
+                    $deleteDraftButton?.trigger('click');
                 }
                 const $composeButton = zeptoQueryThirdPartyDOM('.T-I.T-I-KE.L3[role="button"]');
                 if (!$composeButton.length) {
@@ -126,6 +126,7 @@
                         <input id="_g2t__todo-input" type="text" placeholder="New To-Do"/>
                     </div>
                     <textarea id="_g2t__todo-note" class="__g2t__notes" placeholder="Notes"></textarea>
+                    <div class="__g2t_current-email-link __g2t_truncate"></div>
                     <div class="__g2t__bottom-button-con">
                         <div class="__g2t__bottom-button-con--child __g2t__include-email-toggle-con">
                             <label for="_g2t__include-email-toggle">
@@ -182,9 +183,11 @@
         $g2tCon.addClass('__g2t__show');
         const $todoInput = Zepto('#_g2t__todo-input');
         const $todoNotes = Zepto('#_g2t__todo-note');
+        const $emailLinkField = Zepto('.__g2t_current-email-link');
         setTimeout(() => $todoInput?.focus());
         $todoInput?.val('');
         $todoNotes?.val('');
+        $emailLinkField.text('');
         document.getElementById('_g2t__include-email-toggle').checked = false;
     }
 
@@ -192,6 +195,7 @@
         $g2tCon?.removeClass('__g2t__show');
         $g2tCon?.find('#_g2t__todo-input')?.val('');
         $g2tCon?.find('#_g2t__todo-note')?.val('');
+        $g2tCon?.find('.__g2t_current-email-link')?.text('');
         document.getElementById('_g2t__include-email-toggle').checked = false;
     }
 
@@ -205,24 +209,35 @@
         if (document.body.classList.contains('g2t-sending')) { return; }
         const $todoInput = Zepto('#_g2t__todo-input');
         const $todoNotes = Zepto('#_g2t__todo-note');
+        const $emailLinkField = Zepto('.__g2t_current-email-link');
         const todoText = $todoInput.val().trim();
-        const noteText = ($todoNotes.val().trim() !== '') ? $todoNotes.val().trim() : null
+        const noteText = $todoNotes.val().trim();
+        const emailLinkText = $emailLinkField.text().trim();
         if (todoText === '') { return; }
+        let note = ''
+        if (noteText === '' && emailLinkText === '') {
+            note = null;
+        }
+        else {
+            note = `${noteText}\n${emailLinkText}`;
+        }
         (async () => {
             closeDialog();
             await sendTodo(
                 todoText,
-                noteText
+                note
             );
         })()
     }
 
     function onIncludeEmailLink(e) {
+        const $emailLinkField = Zepto('.__g2t_current-email-link');
         if (e.currentTarget.checked) {
-            const $todoNotes = Zepto('#_g2t__todo-note');
-            const originalVal = $todoNotes?.val()?.trim() ?? '';
             const currentUri = window.location.href;
-            $todoNotes.val(`${originalVal}\n${currentUri}`);
+            $emailLinkField?.text(currentUri)?.attr('title', currentUri); 
+        }
+        else {
+            $emailLinkField?.text('')?.attr('title', ''); 
         }
     }
 

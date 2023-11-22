@@ -1,6 +1,11 @@
 body {
     --app-spacing: 16px;
 }
+.__g2t_truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .__g2t__overlay {
 
@@ -48,10 +53,20 @@ body {
         .__g2t__notes {
             display: block;
             width: 100%;
-            min-height: 170px;
+            /* min-height: 170px; */
+            height: 100px;
             border: 0;
             resize: none;
             outline: none;
+            margin-bottom: calc(var(--app-spacing) / 2);
+        }
+        .__g2t_current-email-link {
+            margin: 0;
+            border:0;
+            width: 100%;
+            font-size: .9rem;
+            font-style: italic;
+            color: #5c9cf5;
         }
         .__g2t__bottom-button-con {
             background-color: #f2f3f5;
