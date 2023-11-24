@@ -43,13 +43,13 @@
     const isOnMac = (navigator.userAgent.toLowerCase().includes("macintosh") || navigator.userAgent.toLowerCase().includes("mac os x"));
     const SELECTORS = {
         COMPOSE_BUTTON: '.T-I.T-I-KE.L3[role="button"], [jslog^="20510"]',
-        DISCARD_DRAFT_BUTTON: '.oh.J-Z-I[role="button"][aria-label*="Discard draft"][data-tooltip]',
+        DISCARD_DRAFT_BUTTON: '.oh.J-Z-I[role="button"][aria-label*="Discard draft"][data-tooltip], [role="button"][aria-label*="Discard draft"]',
         COMPOSE_POPUP_CONTAINER: 'div.no',
-        COMPOSE_EMAIL_BOTTOM_POPUP: 'div.no:has(div[name="to"])',
-        TO_FIELD: 'div[name="to"].anm input',
-        SUBJECT_FIELD: 'input[name="subjectbox"][aria-label="Subject"]',
-        COMPOSE_TEXTBOX_FIELD: '.AD [role="textbox"][aria-multiline="true"]',
-        SEND_BUTTON: '.AD [role="button"][aria-label^="Send"]',
+        COMPOSE_EMAIL_BOTTOM_POPUP: 'div.no:has(div[name="to"], input[role="combobox"], div[aria-label="To"])',
+        TO_FIELD: 'div[name="to"].anm input, div[name="to"] input[role="combobox"], div.anm input[role="combobox"], div[aria-label="To"] input[role="combobox"]',
+        SUBJECT_FIELD: 'input[name="subjectbox"], input[placeholder^="Subject"]',
+        COMPOSE_TEXTBOX_FIELD: '.AD [role="textbox"][aria-multiline="true"][contenteditable], .Am.editable[role="textbox"], .Al.aiL[contenteditable], [aria-label^="Message Body"]:not([form]), div[g_editable], .LW-avf.tS-tW.editable',
+        SEND_BUTTON: '.AD [role="button"][aria-label^="Send"], [jslog^="32601"]',
         GMAIL_LEFT_NAV_BAR: '.aeN.WR.a6o.anZ.baA.nH.oy8Mbf[role="navigation"]'
     };
 
@@ -89,7 +89,7 @@
     function handleLayoutChangeError(code='') {
         Zepto(document.body)?.removeClass('g2t-sending');
         zeptoQueryThirdPartyDOM(SELECTORS.COMPOSE_POPUP_CONTAINER)?.css({ opacity: 1, position: 'static' });
-        alert(`[Code:${code}]: Gmail To Things has encountered and issue with your Gmail client. If it's not too much of a trouble could you send a screenshot of this message to the developer at rafaelgandi@gmail.com. \n\nSorry for the trouble 🙇🏻‍♂️`);
+        alert(`[Code:${(isOnMac) ? 'm' : 'w'}${code}] Gmail To Things has encountered and issue with your Gmail client. If it's not too much of a trouble could you send a screenshot of this message to the developer at rafaelgandi@gmail.com. \n\nSorry for the trouble 🙇🏻‍♂️`);
         return false;
     }
 
@@ -121,10 +121,9 @@
                         !!Zepto(SELECTORS.COMPOSE_EMAIL_BOTTOM_POPUP).length &&
                         !!Zepto(SELECTORS.TO_FIELD).length &&
                         !!Zepto(SELECTORS.SUBJECT_FIELD).length &&
-                        !!Zepto(SELECTORS.COMPOSE_TEXTBOX_FIELD).length &&
                         !!Zepto(SELECTORS.SEND_BUTTON).length
                     );
-                 }, 10e3).then(() => {
+                 }, 13e3).then(() => {
                     $composeButton.css({ pointerEvents: 'none' }); // Disable compose button while sending
                     
                     // Delay gamay para ma set tarong ang notes
@@ -140,9 +139,6 @@
                         $toField.val(userThingsEmail);
                         $subjectField.val(todo);
                         if (!!note) {
-                            if (!$textboxField.length) {
-                                return handleLayoutChangeError('002');
-                            }
                             $textboxField?.text(note);
                         }
                         const $sendButton = zeptoQueryThirdPartyDOM(SELECTORS.SEND_BUTTON);
