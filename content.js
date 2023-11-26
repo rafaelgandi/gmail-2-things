@@ -45,7 +45,7 @@
         COMPOSE_BUTTON: '.T-I.T-I-KE.L3[role="button"], [jslog^="20510"]',
         DISCARD_DRAFT_BUTTON: '.oh.J-Z-I[role="button"][aria-label*="Discard draft"][data-tooltip], [role="button"][aria-label*="Discard draft"]',
         COMPOSE_POPUP_CONTAINER: 'div.no',
-        COMPOSE_EMAIL_BOTTOM_POPUP: 'div.no:has(div[name="to"], input[role="combobox"], div[aria-label="To"])',
+        COMPOSE_EMAIL_BOTTOM_POPUP: 'div.no:has(div[name="to"], input[role="combobox"], div[aria-label="To"]), .aSt:has(div[name="to"], input[role="combobox"], div[aria-label="To"])',
         TO_FIELD: 'div[name="to"].anm input, div[name="to"] input[role="combobox"], div.anm input[role="combobox"], div[aria-label="To"] input[role="combobox"]',
         SUBJECT_FIELD: 'input[name="subjectbox"], input[placeholder^="Subject"]',
         COMPOSE_TEXTBOX_FIELD: '.AD [role="textbox"][aria-multiline="true"][contenteditable], .Am.editable[role="textbox"], .Al.aiL[contenteditable], [aria-label^="Message Body"]:not([form]), div[g_editable], .LW-avf.tS-tW.editable',
